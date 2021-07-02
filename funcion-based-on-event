@@ -1,0 +1,39 @@
+require 'ltn12'
+require('json')
+http = require('socket.http')
+
+local url = 'http://IPSERVER/post'
+
+-- get value of object with group address 1/1/1
+value = grp.getvalue('1/1/1')
+-- send read request to 1/1/1
+read = grp.read('1/1/1')
+-- conver alias to name
+name = grp.alias('1/1/1')
+
+
+local body = json.encode ({
+  item =  name  ,
+	value = value,
+  read = read
+})
+
+local response_body = {}
+
+local body, code, hdrs, stat = http.request({
+    url = url;
+    method = "POST";
+      headers =
+    {
+        ["Content-Type"] = "application/json";
+      	['Content-Length'] = #body;
+
+  };
+      
+  source = ltn12.source.string(body);
+  sink = ltn12.sink.table(response_body);
+  
+
+  })
+
+log ( code, response_body)
