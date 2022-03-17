@@ -5,7 +5,7 @@ function GetKNXValue {
     $pass = "pass"
     $Headers = @{ Authorization = "Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $user,$pass))) }    
 
-    $url = "http://IP-SERVER/scada-remote?m=json&r=grp&fn=find&alias=$idgroup"
+    $url = "http://IP-SERVER/scada-remote?m=json&r=grp&fn=find&alias=$($idgroup)"
 
     $obj = Invoke-WebRequest -Uri $url -Headers $Headers  -ContentType  'application/json; charset=utf-8'
     #write-host $obj
